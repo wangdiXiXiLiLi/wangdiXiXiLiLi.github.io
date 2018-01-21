@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6学习笔记(四,Symbol,Set,WeakSet,Map数据结构)">
+<meta property="og:url" content="http://yoursite.com/2017/09/24/20170924/index.html">
+<meta property="og:site_name" content="xixilili">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-26T16:49:29.270Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6学习笔记(四,Symbol,Set,WeakSet,Map数据结构)">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/24/20170924/"/>
+
+
+
+
+
+  <title>es6学习笔记(四,Symbol,Set,WeakSet,Map数据结构) | xixilili</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixilili</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/20170924/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王迪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ox6ze07ei.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180122000916.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixilili">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">es6学习笔记(四,Symbol,Set,WeakSet,Map数据结构)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T10:15:00+08:00">
+                2017-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<a id="more"></a>
+<h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p>Symbole是es6新增的一种数据类型<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="built_in">Symbol</span>(<span class="string">'猫'</span>);</div><div class="line"><span class="keyword">var</span> b = <span class="string">'狗'</span>;</div><div class="line"><span class="built_in">console</span>.log(a);<span class="comment">//Symbol(jspang) 但是在谷歌控制台打印出来的是红色的</span></div><div class="line"><span class="built_in">console</span>.log(b);<span class="comment">//狗 打印出来是普通的黑色</span></div></pre></td></tr></table></figure></p>
+<p>看了一些文字教程，，没太搞懂这个在前端项目怎么用，只了解到了他可以起到可以在对象循环中保护对象中元素的作用，<br>相当于隐藏元素<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> girl = &#123;</div><div class="line">  name : <span class="string">'NaNa'</span>,</div><div class="line">  age : <span class="number">20</span>,</div><div class="line">  job : <span class="string">'teacher'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> (item <span class="keyword">in</span> girl)&#123;</div><div class="line">  <span class="built_in">console</span>.log(item)</div><div class="line">&#125; <span class="comment">//name,age,job 全部对象都被循环出来</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> weight = <span class="built_in">Symbol</span>()</div><div class="line">girl[weight] = <span class="number">120</span></div><div class="line"><span class="keyword">for</span> (item <span class="keyword">in</span> girl)&#123;</div><div class="line">  <span class="built_in">console</span>.log(item)</div><div class="line">&#125; <span class="comment">//name,age,job都被循环出了，但是weight没有被循环</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(girl) <span class="comment">// &#123;name: "NaNa", age: 20, job: "teacher", Symbol(): 120&#125;</span></div><div class="line"><span class="built_in">console</span>.log(girl[weight]) <span class="comment">// 120</span></div></pre></td></tr></table></figure></p>
+<p>可以看到直接输出对象中键名是Symbol的元素就可以，但是循环中他不会显示<br>但是在数组中却起不到隐藏的作用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> q = <span class="built_in">Symbol</span>(<span class="string">'q'</span>)</div><div class="line"><span class="keyword">var</span> boy = [<span class="string">'DiDi'</span>,<span class="string">'25'</span>,<span class="string">'coder'</span>,q];</div><div class="line"><span class="keyword">for</span> (item <span class="keyword">of</span> boy)&#123;</div><div class="line">  <span class="built_in">console</span>.log(item)</div><div class="line">&#125; <span class="comment">// DiDi,25,coder,Symbol(q) 全部都打印出来了</span></div></pre></td></tr></table></figure></p>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p>Set也是es6里新增的一种数据类型，有点像数组，不过他有去重复的能力。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> SetArr = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">'暹罗'</span>,<span class="string">'布偶'</span>,<span class="string">'英短'</span>]);</div><div class="line"><span class="built_in">console</span>.log(SetArr); <span class="comment">//Set(3) &#123;"暹罗", "布偶", "英短"&#125;</span></div><div class="line"><span class="keyword">let</span> SetArr2 = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">'暹罗'</span>,<span class="string">'布偶'</span>,<span class="string">'英短'</span>,<span class="string">'布偶'</span>]);</div><div class="line"><span class="built_in">console</span>.log(SetArr2); <span class="comment">//Set(3) &#123;"暹罗", "布偶", "英短"&#125;</span></div></pre></td></tr></table></figure></p>
+<p>将多个数组放入Set中要用中括号包住,否则只有第一个有效<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">let</span> doga = [<span class="string">'贵宾'</span>,<span class="string">'比熊'</span>,<span class="string">'柯基'</span>];</div><div class="line"><span class="keyword">let</span> dogb = [<span class="string">'金毛'</span>,<span class="string">'阿拉斯加'</span>,<span class="string">'大白熊'</span>];</div><div class="line"><span class="keyword">let</span> dogc = doga;</div><div class="line"><span class="keyword">let</span> DogArr = <span class="keyword">new</span> <span class="built_in">Set</span>(doga,dogb);</div><div class="line"><span class="keyword">let</span> DogArr2 = <span class="keyword">new</span> <span class="built_in">Set</span>([doga,dogb]);</div><div class="line"><span class="keyword">let</span> DogArr3 = <span class="keyword">new</span> <span class="built_in">Set</span>([doga,dogc]);</div><div class="line"><span class="built_in">console</span>.log(DogArr); <span class="comment">//Set(3) &#123;"金毛", "阿拉斯加", "大白熊"&#125;</span></div><div class="line"><span class="built_in">console</span>.log(DogArr2); <span class="comment">// Set(2)&#123;['贵宾','比熊','柯基'], ['金毛','阿拉斯加','大白熊']&#125;</span></div><div class="line"><span class="built_in">console</span>.log(DogArr3); <span class="comment">// Set(1) &#123;['贵宾','比熊','柯基']&#125;,这里doga和dogc是完全一个内存对象,所以被去重复了</span></div></pre></td></tr></table></figure></p>
+<p>Set里值的增删查<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> SetArr = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">'金毛'</span>,<span class="string">'阿拉斯加'</span>,<span class="string">'大白熊'</span>]);</div><div class="line"><span class="built_in">console</span>.log(SetArr); <span class="comment">//Set(3) &#123;"金毛", "阿拉斯加", "大白熊"&#125;</span></div><div class="line">SetArr.add(<span class="string">'大黄狗'</span>);</div><div class="line"><span class="built_in">console</span>.log(SetArr); <span class="comment">//Set(4) &#123;"金毛", "阿拉斯加", "大白熊", "大黄狗"&#125; </span></div><div class="line">SetArr.delete(<span class="string">'金毛'</span>);</div><div class="line"><span class="built_in">console</span>.log(SetArr); <span class="comment">//Set(3) &#123;"阿拉斯加", "大白熊", "大黄狗"&#125;</span></div><div class="line"><span class="built_in">console</span>.log(SetArr.has(<span class="string">'阿拉斯加'</span>)); <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(SetArr.has(<span class="string">'黑子'</span>)); <span class="comment">//false</span></div><div class="line">SetArr.clear();</div><div class="line"><span class="built_in">console</span>.log(SetArr);<span class="comment">//Set(0) &#123;&#125;</span></div></pre></td></tr></table></figure></p>
+<p>Set循环和数组循环类似,但因为Set没有键名,并且是无序的,所以不能for循环<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> SetArr = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">'金毛'</span>,<span class="string">'阿拉斯加'</span>,<span class="string">'大白熊'</span>,<span class="string">'暹罗'</span>,<span class="string">'玳瑁'</span>,<span class="string">'蓝猫'</span>]);</div><div class="line"><span class="comment">// console.log(SetArr)</span></div><div class="line"><span class="keyword">for</span> (item <span class="keyword">of</span> SetArr)&#123;</div><div class="line">  <span class="built_in">console</span>.log(item);</div><div class="line">&#125; <span class="comment">//'金毛','阿拉斯加','大白熊','暹罗','玳瑁','蓝猫'</span></div><div class="line"></div><div class="line">SetArr.forEach(<span class="function">(<span class="params">value</span>)=&gt;</span><span class="built_in">console</span>.log(value)); <span class="comment">//'金毛','阿拉斯加','大白熊','暹罗','玳瑁','蓝猫'</span></div></pre></td></tr></table></figure></p>
+<p>Set的大小<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(SetArr.size); <span class="comment">//6</span></div></pre></td></tr></table></figure></p>
+<h2 id="WeakSet"><a href="#WeakSet" class="headerlink" title="WeakSet"></a>WeakSet</h2><p>WeakSet可以理解为对象版的Set,但是在New WeakSet()时,不能在括号内不直接写对象,会报错<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> SetArr = <span class="keyword">new</span> <span class="built_in">WeakSet</span>(&#123;<span class="string">'a'</span>:<span class="string">'暹罗'</span>,<span class="string">'b'</span>:<span class="string">'布偶'</span>,<span class="string">'c'</span>:<span class="string">'英短'</span>&#125;);</div><div class="line"> <span class="comment">//报错</span></div></pre></td></tr></table></figure></p>
+<p>要通过先new后添加的方式来增加WeakSet内的值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> arr = &#123;<span class="string">'a'</span>:<span class="string">'暹罗'</span>,<span class="string">'b'</span>:<span class="string">'布偶'</span>,<span class="string">'c'</span>:<span class="string">'英短'</span>&#125;;</div><div class="line"><span class="keyword">let</span> WeakSetArr = <span class="keyword">new</span> <span class="built_in">WeakSet</span>();</div><div class="line">WeakSetArr.add(arr);</div><div class="line"><span class="built_in">console</span>.log(WeakSetArr);<span class="comment">//WeakSet &#123;&#123;'a':'暹罗','b':'布偶','c':'英短'&#125;&#125;</span></div></pre></td></tr></table></figure></p>
+<p>增,代码接上面<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> arr2 = &#123;<span class="string">'d'</span>:<span class="string">'金毛'</span>,<span class="string">'e'</span>:<span class="string">'阿拉斯加'</span>,<span class="string">'f'</span>:<span class="string">'大白熊'</span>&#125;;</div><div class="line">WeakSetArr.add(arr2);</div><div class="line"><span class="built_in">console</span>.log(WeakSetArr);<span class="comment">//WeakSet &#123;&#123;'a':'暹罗','b':'布偶','c':'英短'&#125;,&#123;'d':'金毛','e':'阿拉斯加','f':'大白熊'&#125;&#125;</span></div><div class="line">WeakSetArr.add(arr); </div><div class="line"><span class="built_in">console</span>.log(WeakSetArr);<span class="comment">//WeakSet &#123;&#123;'a':'暹罗','b':'布偶','c':'英短'&#125;,&#123;'d':'金毛','e':'阿拉斯加','f':'大白熊'&#125;&#125; 被去重了</span></div></pre></td></tr></table></figure></p>
+<p>删,代码接上面<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">WeakSetArr.delete(arr2)</div><div class="line"><span class="built_in">console</span>.log(WeakSetArr) <span class="comment">//WeakSet &#123;&#123;'a':'暹罗','b':'布偶','c':'英短'&#125;&#125; 删除了第二个元素</span></div><div class="line"><span class="built_in">console</span>.log(WeakSetArr.has(arr)); <span class="comment">//ture</span></div><div class="line"><span class="built_in">console</span>.log(WeakSetArr.has(arr2)); <span class="comment">//false</span></div><div class="line">WeakSetArr.clear(); <span class="comment">//报错,WeakSet没有clean()</span></div></pre></td></tr></table></figure></p>
+<h2 id="Map数据结构"><a href="#Map数据结构" class="headerlink" title="Map数据结构"></a>Map数据结构</h2><p>Map可以理解为一种特殊的键值对,很灵活,直接撸代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> json = &#123;<span class="attr">name</span>:<span class="string">"咪咪"</span>&#125;;</div><div class="line"><span class="keyword">var</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</div><div class="line">map.set(json,<span class="string">'我的猫'</span>);</div><div class="line"><span class="built_in">console</span>.log(map); <span class="comment">// Map(1) &#123;&#123;name:"咪咪"&#125; =&gt; "我的猫"&#125;</span></div></pre></td></tr></table></figure></p>
+<p>可以看到对象也可以做键值,同理数组字符串也一样<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">'笨笨'</span>,<span class="string">'贝贝'</span>];</div><div class="line">map.set(arr,<span class="string">'我的狗'</span>);</div><div class="line"><span class="built_in">console</span>.log(map); <span class="comment">//Map(2)&#123;&#123;…&#125; =&gt; "我的猫", Array(2) =&gt; "我的狗"&#125;</span></div><div class="line">map.set(<span class="string">'我'</span>,<span class="string">'帅哥哥'</span>);</div><div class="line"><span class="built_in">console</span>.log(map); <span class="comment">//"我的猫", Array(2) =&gt; "我的狗", "我" =&gt; "帅哥哥"&#125;</span></div></pre></td></tr></table></figure></p>
+<p>获得map的值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(map.get(arr)); <span class="comment">// 我的狗</span></div><div class="line"><span class="built_in">console</span>.log(map.get(<span class="string">'我'</span>)); <span class="comment">//帅哥哥</span></div></pre></td></tr></table></figure></p>
+<p>Map的删除和查找<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(map.has(<span class="string">'我'</span>)); <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(map.has(json)); <span class="comment">//true</span></div><div class="line"><span class="keyword">var</span> arrtwo = [<span class="string">'啵啵'</span>,<span class="string">'点点'</span>];</div><div class="line"><span class="built_in">console</span>.log(map.has(arrtwo)); <span class="comment">//false</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> json2 = &#123;<span class="attr">age</span> : <span class="number">15</span>&#125;;</div><div class="line">newmap = <span class="keyword">new</span> <span class="built_in">Map</span>();</div><div class="line">newmap.set(json2,<span class="string">'json的值'</span>);</div><div class="line">newmap.set(<span class="string">'猴子的键'</span>,<span class="string">'猴子的值'</span>);<span class="comment">//Map(2) &#123;&#123;…&#125; =&gt; "json的值", "猴子的键" =&gt; "猴子的值"&#125;</span></div><div class="line"><span class="built_in">console</span>.log(newmap);</div><div class="line">newmap.delete(json2); </div><div class="line"><span class="built_in">console</span>.log(newmap); <span class="comment">//Map(1)&#123;"猴子的键" =&gt; "猴子的值"&#125;</span></div><div class="line">newmap.delete(<span class="string">'猴子的键'</span>);</div><div class="line"><span class="built_in">console</span>.log(newmap); <span class="comment">//Map(0) &#123;&#125;</span></div></pre></td></tr></table></figure>
+<p>获得大小(内部键值对数量)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(newmap.size); <span class="comment">//0</span></div><div class="line">newmap.set(<span class="string">'狗子的键'</span>,<span class="string">'狗子的值'</span>);</div><div class="line"><span class="built_in">console</span>.log(newmap.size); <span class="comment">//1</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" <i class="fa fa-tag"></i> javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/23/20170923/" rel="next" title="xixi-vue-study vue-cli的小demo">
+                <i class="fa fa-chevron-left"></i> xixi-vue-study vue-cli的小demo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/26/20170926/" rel="prev" title="es6学习笔记(五,Proxy)">
+                es6学习笔记(五,Proxy) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="http://ox6ze07ei.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180122000916.png"
+              alt="王迪" />
+          
+            <p class="site-author-name" itemprop="name">王迪</p>
+            <p class="site-description motion-element" itemprop="description">自己踩的坑,自己填上</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index-1.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wangdiXiXiLiLi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:834261229@qq.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/lili_58de27b8417b5" target="_blank" title="segmentfault">
+                  
+                    <i class="fa fa-fw fa-globe"></i>segmentfault</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wang-di-46-30-12/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>知乎</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol"><span class="nav-number">1.</span> <span class="nav-text">Symbol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set"><span class="nav-number">2.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WeakSet"><span class="nav-number">3.</span> <span class="nav-text">WeakSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map数据结构"><span class="nav-number">4.</span> <span class="nav-text">Map数据结构</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王迪</span>
+
+  
+</div>
+
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+-->
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共9.3k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
