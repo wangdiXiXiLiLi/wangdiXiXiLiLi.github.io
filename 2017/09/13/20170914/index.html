@@ -335,9 +335,9 @@
         <hr>
 <a id="more"></a>
 <p>今天在segmentfault上看到了这个问答,这样一个对象，如何拿到这个对象最后一项的值</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = &#123;</div><div class="line">    a:<span class="string">"qqq"</span>,</div><div class="line">    b:<span class="string">"ttt"</span>,</div><div class="line">    c:<span class="string">"www"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>当时的想法是<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> arr) &#123;<span class="comment">//不使用过滤</span></div><div class="line">    a = i</div><div class="line">&#125;   </div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(arr[a])</div></pre></td></tr></table></figure></p>
-<p>或者<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(arr[<span class="built_in">Object</span>.keys(arr)[<span class="built_in">Object</span>.keys(arr).length<span class="number">-1</span>]])</div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = &#123;</span><br><span class="line">    a:<span class="string">"qqq"</span>,</span><br><span class="line">    b:<span class="string">"ttt"</span>,</span><br><span class="line">    c:<span class="string">"www"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当时的想法是<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> arr) &#123;<span class="comment">//不使用过滤</span></span><br><span class="line">    a = i</span><br><span class="line">&#125;   </span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr[a])</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(arr[<span class="built_in">Object</span>.keys(arr)[<span class="built_in">Object</span>.keys(arr).length<span class="number">-1</span>]])</span><br></pre></td></tr></table></figure></p>
 <p>但是经过网友提醒，JSON对象是无序的，如果键名不能指定排序，是没有最后一项的概念的，<br>所以如果想要保证数据的有效性,还是应该使用Array.<br>如果数据来源于http并且是string，可以在string转化成Object前截取</p>
 
       
@@ -454,7 +454,7 @@
             
             
             <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
+              <a href="/tags/index-1.html">
                 <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
@@ -538,7 +538,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共9.3k字</span>
+  <span class="post-count">博客全站共10.3k字</span>
 </div>
 
         

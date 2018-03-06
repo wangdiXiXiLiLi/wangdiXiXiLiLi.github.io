@@ -335,10 +335,10 @@
       
         <hr>
 <a id="more"></a>
-<p>首先是这个报错，所有的npm install操作全都报错了，<br>报错信息为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">npm ERR! Windows_NT 10.0.14393</div><div class="line">npm ERR! argv &quot;C:\\Program Files\\nodejs\\node.exe&quot; &quot;C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js&quot; &quot;install&quot; &quot;-g&quot; &quot;hexo&quot;</div><div class="line">npm ERR! node v6.11.5</div><div class="line">npm ERR! npm  v3.10.10</div><div class="line">npm ERR! code ETIMEDOUT</div><div class="line">npm ERR! errno ETIMEDOUT</div><div class="line">npm ERR! syscall connect</div><div class="line"></div><div class="line">npm ERR! network connect ETIMEDOUT 151.101.196.162:443</div><div class="line">npm ERR! network This is most likely not a problem with npm itself</div><div class="line">npm ERR! network and is related to network connectivity.</div><div class="line">npm ERR! network In most cases you are behind a proxy or have bad network settings.</div><div class="line">npm ERR! network</div><div class="line">npm ERR! network If you are behind a proxy, please make sure that the</div><div class="line">npm ERR! network &apos;proxy&apos; config is set properly.  See: &apos;npm help config&apos;</div><div class="line"></div><div class="line">npm ERR! Please include the following file with any support request:</div><div class="line">npm ERR!     D:\myblog\npm-debug.log</div></pre></td></tr></table></figure></p>
-<p>最后搜了好久在stackoverflow上找到的答案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm config set proxy false</div><div class="line">npm cache clean</div></pre></td></tr></table></figure></p>
+<p>首先是这个报错，所有的npm install操作全都报错了，<br>报错信息为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">npm ERR! Windows_NT 10.0.14393</span><br><span class="line">npm ERR! argv &quot;C:\\Program Files\\nodejs\\node.exe&quot; &quot;C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js&quot; &quot;install&quot; &quot;-g&quot; &quot;hexo&quot;</span><br><span class="line">npm ERR! node v6.11.5</span><br><span class="line">npm ERR! npm  v3.10.10</span><br><span class="line">npm ERR! code ETIMEDOUT</span><br><span class="line">npm ERR! errno ETIMEDOUT</span><br><span class="line">npm ERR! syscall connect</span><br><span class="line"></span><br><span class="line">npm ERR! network connect ETIMEDOUT 151.101.196.162:443</span><br><span class="line">npm ERR! network This is most likely not a problem with npm itself</span><br><span class="line">npm ERR! network and is related to network connectivity.</span><br><span class="line">npm ERR! network In most cases you are behind a proxy or have bad network settings.</span><br><span class="line">npm ERR! network</span><br><span class="line">npm ERR! network If you are behind a proxy, please make sure that the</span><br><span class="line">npm ERR! network &apos;proxy&apos; config is set properly.  See: &apos;npm help config&apos;</span><br><span class="line"></span><br><span class="line">npm ERR! Please include the following file with any support request:</span><br><span class="line">npm ERR!     D:\myblog\npm-debug.log</span><br></pre></td></tr></table></figure></p>
+<p>最后搜了好久在stackoverflow上找到的答案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set proxy false</span><br><span class="line">npm cache clean</span><br></pre></td></tr></table></figure></p>
 <p>执行这两行即可，效果是清楚代理和缓存</p>
-<p>原文地址<a href="https://stackoverflow.com/questions/32783561/npm-wont-install-packages-npm-err-network-tunneling-socket-could-not-be-estab" target="_blank" rel="external">stackoverflow</a> </p>
+<p>原文地址<a href="https://stackoverflow.com/questions/32783561/npm-wont-install-packages-npm-err-network-tunneling-socket-could-not-be-estab" target="_blank" rel="noopener">stackoverflow</a> </p>
 
       
     </div>
@@ -464,7 +464,7 @@
             
             
             <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
+              <a href="/tags/index-1.html">
                 <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
@@ -548,7 +548,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共9.3k字</span>
+  <span class="post-count">博客全站共10.3k字</span>
 </div>
 
         
