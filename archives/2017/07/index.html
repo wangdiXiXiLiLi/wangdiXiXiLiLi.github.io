@@ -95,14 +95,16 @@
 
 
 
-<meta property="og:type" content="article">
-<meta property="og:title" content="JS中如何快速获取JSON对象的最后一项的值">
-<meta property="og:url" content="http://yoursite.com/2017/09/13/20170914/index.html">
+<meta name="description" content="自己挖坑自己埋">
+<meta property="og:type" content="website">
+<meta property="og:title" content="xixilili">
+<meta property="og:url" content="http://yoursite.com/archives/2017/07/index.html">
 <meta property="og:site_name" content="xixilili">
+<meta property="og:description" content="自己挖坑自己埋">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-25T15:00:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS中如何快速获取JSON对象的最后一项的值">
+<meta name="twitter:title" content="xixilili">
+<meta name="twitter:description" content="自己挖坑自己埋">
 
 
 
@@ -132,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/13/20170914/"/>
+  <link rel="canonical" href="http://yoursite.com/archives/2017/07/"/>
 
 
 
 
 
-  <title>JS中如何快速获取JSON对象的最后一项的值 | xixilili</title>
+  <title>归档 | xixilili</title>
   
 
 
@@ -157,7 +159,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left page-archive">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -251,147 +253,74 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block archive">
+    <div id="posts" class="posts-collapse">
+      <span class="archive-move-on"></span>
 
-  
+      <span class="archive-page-counter">
+        
+        
+        
+          
+        
+        嗯..! 目前共计 19 篇日志。 继续努力。
+      </span>
 
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/20170914/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="王迪">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ox6ze07ei.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180122000916.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixilili">
-    </span>
-
-    
-      <header class="post-header">
+      
 
         
         
-          <h1 class="post-title" itemprop="name headline">JS中如何快速获取JSON对象的最后一项的值</h1>
         
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-13T11:00:19+08:00">
-                2017-09-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <hr>
-<a id="more"></a>
-<p>今天在segmentfault上看到了这个问答,这样一个对象，如何拿到这个对象最后一项的值</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = &#123;</span><br><span class="line">    a:<span class="string">"qqq"</span>,</span><br><span class="line">    b:<span class="string">"ttt"</span>,</span><br><span class="line">    c:<span class="string">"www"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当时的想法是<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> arr) &#123;<span class="comment">//不使用过滤</span></span><br><span class="line">    a = i</span><br><span class="line">&#125;   </span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr[a])</span><br></pre></td></tr></table></figure></p>
-<p>或者<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(arr[<span class="built_in">Object</span>.keys(arr)[<span class="built_in">Object</span>.keys(arr).length<span class="number">-1</span>]])</span><br></pre></td></tr></table></figure></p>
-<p>但是经过网友提醒，JSON对象是无序的，如果键名不能指定排序，是没有最后一项的概念的，<br>所以如果想要保证数据的有效性,还是应该使用Array.<br>如果数据来源于http并且是string，可以在string转化成Object前截取</p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
+          <div class="collection-title">
+            <h1 class="archive-year" id="archive-year-2017">2017</h1>
           </div>
+        
+        
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/17/2017091701/" rel="prev" title="es6学习笔记(一,扩展运算符,for...of 循环)">
-                es6学习笔记(一,扩展运算符,for...of 循环) <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2017/07/23/20170923/" itemprop="url">
+              
+                <span itemprop="name">vue-study vue-cli的小demo</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-07-23T22:19:00+08:00"
+              content="2017-07-23" >
+          07-23
+        </time>
+      </div>
+
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
       
+
     </div>
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -399,10 +328,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -442,7 +367,7 @@
             
               <a href="/archives">
             
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -454,7 +379,7 @@
             
             
             <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
+              <a href="/tags/index-1.html">
                 <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
@@ -538,7 +463,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共10.6k字</span>
+  <span class="post-count">博客全站共11.7k字</span>
 </div>
 
         
@@ -634,10 +559,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
-
-
 
   
 

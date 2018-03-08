@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="php," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="这篇文章主要讲composer自动加载的配置和讲解">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php包管理器composer自动加载配置">
+<meta property="og:url" content="http://yoursite.com/2018/01/21/20180121/index.html">
+<meta property="og:site_name" content="xixilili">
+<meta property="og:description" content="这篇文章主要讲composer自动加载的配置和讲解">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ox6ze07ei.bkt.clouddn.com/d0fdde053064e3c94ec9daeb15a106c.png">
+<meta property="og:updated_time" content="2018-03-08T18:37:53.438Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php包管理器composer自动加载配置">
+<meta name="twitter:description" content="这篇文章主要讲composer自动加载的配置和讲解">
+<meta name="twitter:image" content="http://ox6ze07ei.bkt.clouddn.com/d0fdde053064e3c94ec9daeb15a106c.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/21/20180121/"/>
+
+
+
+
+
+  <title>php包管理器composer自动加载配置 | xixilili</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixilili</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/21/20180121/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王迪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ox6ze07ei.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180122000916.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixilili">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">php包管理器composer自动加载配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T23:15:00+08:00">
+                2018-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇文章主要讲composer自动加载的配置和讲解<br><a id="more"></a></p>
+<p>composer就不多说了，是php的包管理器，和node.js的npm，python的pip差不多<br>composer里面有自动加载的配置，可以帮助我们自动加载我们的类<br>我们通过slim来做路由演示</p>
+<h2 id="首先安装slim"><a href="#首先安装slim" class="headerlink" title="首先安装slim"></a>首先安装slim</h2><p>创建个文件夹，我命名为了modernroute(这个随便)<br>然后创建composer.json文件<br>安装slim,命令行进入文件夹后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require slim/slim &quot;^3.0&quot;</span><br></pre></td></tr></table></figure></p>
+<p>这样的话slim下好了<br>，在根目创建index.php文件<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="string">'vendor/autoload.php'</span>;</span><br><span class="line"></span><br><span class="line">$app = <span class="keyword">new</span> Slim\App();</span><br><span class="line"></span><br><span class="line">$app-&gt;get(<span class="string">'/'</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'is mine'</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">$app-&gt;run();</span><br></pre></td></tr></table></figure></p>
+<p>然后命令行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -S localhost:8000</span><br></pre></td></tr></table></figure></p>
+<p>让服务跑起来；<br>如果我们在slim中创建了路由，希望由controller中的方法执行，而不是像这样通过匿名函数该怎么样呢？<br>slim官方文档给了我们方法<br>(<code>https://www.slimframework.com/docs/v3/objects/router.html#how-to-create-routes</code>下搜索关键字<code>\HomeController::class</code>)</p>
+<h2 id="创建相应文件"><a href="#创建相应文件" class="headerlink" title="创建相应文件"></a>创建相应文件</h2><p>我们希望通过根目录Controller文件夹下的UserCon类中的getUserName方法来处理 ‘/name’这个路由<br>修改index.php<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">require &apos;vendor/autoload.php&apos;;</span><br><span class="line"></span><br><span class="line">$app = new Slim\App();</span><br><span class="line"></span><br><span class="line">$app-&gt;get(&apos;/&apos;,function()&#123;</span><br><span class="line">    echo &apos;is mine&apos;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">$app-&gt;get(&apos;/name&apos;, \Controller\UserCon::class.&apos;:getUserName&apos;);</span><br><span class="line"></span><br><span class="line">$app-&gt;run();</span><br></pre></td></tr></table></figure></p>
+<p> 然后再根目录创建Controller文件夹，文件夹下创建UserCon文件<br> 文件夹结构如下<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-  Controller</span><br><span class="line">  -  UserCon.php</span><br><span class="line">-  vendor	</span><br><span class="line">-  index.php</span><br><span class="line">-  composer.json</span><br><span class="line">-  compooser.lock</span><br></pre></td></tr></table></figure></p>
+<p> 在UserCon.php里编辑内容<br> <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">Class</span> <span class="title">UserCon</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getUserName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'wang'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>启动服务浏览器输入 localhost:8000/name,发现报错</p>
+<div align="center"><br> <img src="http://ox6ze07ei.bkt.clouddn.com/d0fdde053064e3c94ec9daeb15a106c.png" width="225" height="425" alt="" align="center"><br></div>
+
+<p>打开错误调试后发现slim找不到<code>\Controller\UserCon</code>这个类<br>(<code>https://www.slimframework.com/docs/v3/handlers/error.html</code>下搜索<code>displayErrorDetails</code>)</p>
+<h2 id="composer自动加载"><a href="#composer自动加载" class="headerlink" title="composer自动加载"></a>composer自动加载</h2><p>这时候我们就可以使用composer中的自动加载来加载我们想要的类了。<br>在我们在composer.json文件中<br>加入<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"require"</span>: &#123;</span><br><span class="line">        <span class="attr">"slim/slim"</span>: <span class="string">"^3.0"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"autoload"</span>: &#123;</span><br><span class="line">        <span class="attr">"psr-4"</span> : &#123;</span><br><span class="line">            <span class="attr">""</span> : <span class="string">""</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里的意思是根据PSR4规范来加载对应的类(PSR0,PSR4都可以，这里用PSR4)<br>冒号前面是根命名空间，冒号后面是根目录(注意’\’转义)<br>因为我们这里是在<code>\Controller\UserCon</code>下加载根目录下Controller文件下的UserCon类，冒号前面是根命名空间（这里根命名空间就是’\’）,<br>冒号后面是根目录，所以写成了<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"psr-4" : &#123;</span><br><span class="line">            "" : ""</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p>的形式<br>添加完这段代码后需要用composer重写自动加载（vendor/autoload）<br>在名命令行中<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer dump-autoload</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer install</span><br></pre></td></tr></table></figure></p>
+<p>再次打开服务，输入<code>localhost:8000/name</code><br>会发现服务已经以来了<br>如果我们把跟命名空间定义为其他的，比如说Van<br>我们希望Van这个命名空间指向Controller<br>那么需要在composer中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">修改index中&apos;/name&apos;的路由</span><br><span class="line">```php</span><br><span class="line">$app-&gt;get(&apos;/name&apos;, \Van\UserCon::class.&apos;:getUserName&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>修改Controller目录下的UserCon.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Van</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">Class</span> <span class="title">UserCon</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getUserName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'wang'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样的话，就是Van这个命名空间指向Controller这个文件夹了<br>我们需要将composer.json文件修改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;require&quot;: &#123;</span><br><span class="line">        &quot;slim/slim&quot;: &quot;^3.0&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;autoload&quot;: &#123;</span><br><span class="line">        &quot;psr-4&quot;: &#123;</span><br><span class="line">            &quot;Van\\&quot;: &quot;Controller/&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后重新composer install一下，就可以了，启动服务/name下依然会正常显示。</p>
+<h3 id="“files”配置"><a href="#“files”配置" class="headerlink" title="“files”配置"></a>“files”配置</h3><p>在composer.json下autoload里，files配置的决定了单独会自动加载进来的文件，不要遵守PSR0和PSR4，一般用来引入公共文件<br>我们在composer.json中加入  <code>&quot;files&quot;: [&quot;Common/functions.php&quot;]</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;require&quot;: &#123;</span><br><span class="line">        &quot;slim/slim&quot;: &quot;^3.0&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;autoload&quot;: &#123;</span><br><span class="line">        &quot;psr-4&quot;: &#123;</span><br><span class="line">            &quot;Van\\&quot;: &quot;Controller/&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;files&quot;: [&quot;Common/functions.php&quot;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 然后重新install<br> 在根目录中建立Common文件夹，创建functions.php文件<br> 写入<br> <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMeFive</span> <span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'haha~'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 然后路由中加入<br> <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$app-&gt;get(<span class="string">'/givemefive'</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    getMeFive();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>启动服务访问 localhost:8000/givemefive<br>页面显示haha~</p>
+<p>说明正常，composer帮我们加载了这个文件</p>
+<h3 id="Class-map"><a href="#Class-map" class="headerlink" title="Class-map"></a>Class-map</h3><p>Class-map也是一种写法，但是没增加一个类都要执行一边composer,以便生成新的autoload_classmap.php文件<br>比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;classmap&quot;: [&quot;Model/&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>在composer中这样写，<br>他就会把Model/下的所有类文件根据明名空间加类名一一对应起来<br>比如你Model中有个User类<br>他会生成<br><code>&#39;Model\\User&#39; =&gt; $baseDir . &#39;/Model/User.php&#39;,</code><br>这样的对应，缺点就是每当有新的类文件我们都需要执行一下composer install生成新的classmap</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/php/" <i class="fa fa-tag"></i> php</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/28/20171228/" rel="next" title="关于PHP引用其他对象时候的clone">
+                <i class="fa fa-chevron-left"></i> 关于PHP引用其他对象时候的clone
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/03/20180306/" rel="prev" title="记录一次hexo中一系列提交失败的解决办法">
+                记录一次hexo中一系列提交失败的解决办法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="http://ox6ze07ei.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180122000916.png"
+              alt="王迪" />
+          
+            <p class="site-author-name" itemprop="name">王迪</p>
+            <p class="site-description motion-element" itemprop="description">自己挖坑自己埋</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index-1.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wangdiXiXiLiLi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:834261229@qq.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/lili_58de27b8417b5" target="_blank" title="segmentfault">
+                  
+                    <i class="fa fa-fw fa-globe"></i>segmentfault</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#首先安装slim"><span class="nav-number">1.</span> <span class="nav-text">首先安装slim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建相应文件"><span class="nav-number">2.</span> <span class="nav-text">创建相应文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#composer自动加载"><span class="nav-number">3.</span> <span class="nav-text">composer自动加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“files”配置"><span class="nav-number">3.1.</span> <span class="nav-text">“files”配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class-map"><span class="nav-number">3.2.</span> <span class="nav-text">Class-map</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王迪</span>
+
+  
+</div>
+
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+-->
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共11.7k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
